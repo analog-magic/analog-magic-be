@@ -1,0 +1,26 @@
+# docker
+.dockerignore
+Dockerfile
+
+# packages
+node_modules
+
+# build
+dist
+
+# env
+.env
+.env.*
+
+# other config
+.git
+.eslintrc
+.eslintcache
+.gitignore
+.prettierignore
+.prettierrc
+bitbucket-pipelines.yml
+README.md
+.husky
+jest.config.*
+.nvmrc

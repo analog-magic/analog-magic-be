@@ -7,7 +7,7 @@ import { join } from 'path';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
-import { CoursesService } from './courses/courses.service';
+import { CoursesModule } from './courses/courses.module';
 
 @Module({
   imports: [
@@ -21,11 +21,8 @@ import { CoursesService } from './courses/courses.service';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
-        // CHECK IF YOU GET WHAT IS EXPECTED
-        console.log('ENV VAR', configService.get('DATABASE_URL'));
-
         const options: MongooseModuleOptions = {
-          uri: configService.get<string>('DATABASE_URL'),
+          uri: configService.get<string>('MONGODB_URI'),
         };
 
         return options;
@@ -34,8 +31,9 @@ import { CoursesService } from './courses/courses.service';
     ConfigModule.forRoot({
       cache: true,
     }),
+    CoursesModule,
   ],
   controllers: [],
-  providers: [AppService, AppResolver, CoursesService],
+  providers: [AppService, AppResolver],
 })
 export class AppModule {}

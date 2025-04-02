@@ -1,26 +1,120 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Analog Magic Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is the backend for the Analog Magic project, built with NestJS, GraphQL, and MongoDB.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Quick Start with Docker
+
+The easiest way to run this project is using Docker. This approach ensures that the application and database run in an isolated environment with the correct configuration.
+
+### Prerequisites
+
+- [Docker](https://www.docker.com/products/docker-desktop/) installed on your machine
+- [Docker Compose](https://docs.docker.com/compose/install/) (usually comes with Docker Desktop)
+
+### Running the Application
+
+1. Start the application and database with Docker Compose:
+
+   ```bash
+   docker-compose up -d
+   ```
+
+2. Seed the database with initial data:
+
+   ```bash
+   docker exec -it analog-app npm run seed
+   ```
+
+3. Access the GraphQL playground:
+   - Open your browser and navigate to [http://localhost:3000/graphql](http://localhost:3000/graphql)
+   - Try running queries like
+
+### Stopping the Application
+
+```bash
+docker-compose down
+```
+
+## Development Setup
+
+### Running the Application Locally
+
+If you prefer to run the application directly on your machine:
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Make sure MongoDB is running. You can use Docker for the database only:
+
+   ```bash
+   docker-compose up -d mongo
+   ```
+
+3. Update your `.env` file to connect to MongoDB:
+
+   ```
+   MONGODB_URI=mongodb://root:example@localhost:27017/analog_db?authSource=admin
+   ```
+
+4. Start the application in development mode:
+
+   ```bash
+   npm run start:dev
+   ```
+
+5. Seed the database:
+   ```bash
+   npm run seed
+   ```
+
+### Docker Configuration
+
+The project includes:
+
+- `Dockerfile` - Production build
+- `Dockerfile.dev` - Development build with hot-reload
+- `docker-compose.yml` - Configuration for running the full stack
+
+#### Docker Compose Services:
+
+- `app` - NestJS application
+- `mongo` - MongoDB database
+
+## GraphQL API
+
+The API is implemented using GraphQL with NestJS. Key queries include:
+
+- `courses`: Returns all courses
+- `course(id)`: Returns a single course by ID
+
+## Development Tools
+
+### Available npm Scripts
+
+- `npm run start` - Start the application
+- `npm run start:dev` - Start in development mode with hot-reload
+- `npm run build` - Build the application
+- `npm run seed` - Seed the database with initial data
+- `npm run test` - Run tests
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Connection Issues with MongoDB**:
+
+   - If running the app locally, make sure to use `localhost` instead of `mongo` in your connection string
+   - Verify the MongoDB container is running with `docker ps`
+
+2. **Empty Data Responses**:
+
+   - Make sure you've run the seed script: `docker exec -it analog-app npm run seed`
+
+3. **Docker Build Failures**:
+   - Try rebuilding the images: `docker-compose build --no-cache`
 
 ## Description
 

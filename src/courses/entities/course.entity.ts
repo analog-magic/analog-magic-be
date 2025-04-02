@@ -1,32 +1,50 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Types } from 'mongoose';
+import { Field, ID, ObjectType, Float, Int } from '@nestjs/graphql';
 
-@Schema()
-export class Course extends Document {
+@ObjectType()
+@Schema({ timestamps: true })
+export class Course {
+  @Field(() => ID)
+  id: string;
+
+  @Field()
   @Prop({ required: true })
   title: string;
 
+  @Field()
   @Prop({ required: true })
   description: string;
 
+  @Field()
   @Prop({ required: true })
   teacher: string;
 
-  @Prop({ required: true })
+  @Field(() => Int)
+  @Prop({ required: true, type: mongoose.Schema.Types.Number })
   capacity: number;
 
-  @Prop({ required: true })
-  price: string;
+  @Field(() => Float)
+  @Prop({ required: true, type: mongoose.Schema.Types.Number })
+  price: number;
 
-  @Prop({ required: true })
+  @Field()
+  @Prop({ required: true, type: mongoose.Schema.Types.String })
   starRating: string;
 
-  // online, live
-  @Prop({ required: true })
+  @Field()
+  @Prop({
+    required: true,
+    type: mongoose.Schema.Types.String,
+    enum: ['online', 'live'],
+  })
   category: string;
 
-  @Prop({ default: Date.now })
+  @Field(() => Date)
   createdAt: Date;
+
+  @Field(() => Date, { nullable: true })
+  updatedAt?: Date | null;
 }
 
 export const CourseSchema = SchemaFactory.createForClass(Course);

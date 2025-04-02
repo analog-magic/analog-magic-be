@@ -1,0 +1,43 @@
+type Course {
+  "ID"
+  id: ID!
+
+  "Title"
+  title: String!
+
+  "Description"
+  description: String!
+
+  "Teacher"
+  teacher: String!
+
+  "Capacity"
+  capacity: Int!
+
+  "Price"
+  price: Float!
+
+  "Star rating"
+  starRating: String!
+
+  "Category"
+  category: String!
+
+  "Created at"
+  createdAt: DateTime!
+
+  "Updated at"
+  updatedAt: DateTime
+}
+
+enum CourseCategory {
+  ONLINE
+  LIVE
+}
+
+scalar DateTime
+
+type Query {
+  courses: [Course!]!
+  course(id: ID!): Course
+}
